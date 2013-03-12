@@ -37,7 +37,7 @@ def add_thread(request):
                 title = form.cleaned_data['title'],
 				description = form.cleaned_data['description'],
 			)
-	        #logger.debug('thread created')
+	       
 	        
 		return HttpResponseRedirect('/')
 	else:	
