@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+<hr>
+    <h3>Please add a comment for the thread : {{thread.title}}</h3>
+    <form method='post' action='.'> {% csrf_token %}
+        {{ form.as_p }}
+       <input type='submit'>
+   </form>
+
+
+{% endblock %}
+

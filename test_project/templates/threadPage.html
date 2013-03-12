@@ -1,0 +1,111 @@
+{% extends "base.html" %}<br>
+{% block content %}<br>
+
+<title> Thread Page</title>
+ <hr>
+<style type = "text/css">
+
+
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script> 
+$(document).ready(function(){
+  $("#flip").click(function(){
+      $("#flip").each(function(){
+          $("#panel").slideToggle("slow");
+      });
+   });
+});
+
+function voting(current_but, vote_type, comment_id) {
+    $.ajax({
+       url:"/vote/"+ vote_type +"/"+ comment_id +"/",
+       type:'post',
+       success:function(data) {
+           current_but.find("b").html(data);
+           
+       },
+       error: function() {
+           alert("Click ok to login or signup ");
+       }
+   });
+}
+$(document).ready(function(){
+    $(".del").click (function(){
+    if (!confirm("Do you want to perform this action")){
+        return false;
+     
+        }
+    });
+});
+</script>
+ 
+<style type="text/css"> 
+#flip
+{
+padding:5px;
+text-align:left;
+background color:grey;
+border:solid 1px #c3c3c3;
+
+}
+#panel
+{
+padding:50px;
+display:none;
+}
+</style>
+<div id="center"
+<b>{{ thread.title }}</b><br><br>
+{{ thread.description }}<br><br>
+<i><font size= "2" color= "black">Posted by: {{ thread.thread_user.username }}</font></i><br>
+<i><font size= "2" color= "black"> Created : {{ thread.created }}</font> </i><br>
+
+{% ifequal request.user.username thread.thread_user.username %}
+    <button type="button"><a class="del" href="/thread/delete/{{ thread.id }}/" Style="text-decoration: none"> Delete </a></button>
+{% endifequal %}
+
+
+{% ifequal request.user.username thread.thread_user.username %}
+    <button type="button"><a class = "del" href="/thread/edit/{{ thread.id }}" Style="text-decoration: none"> EDIT </a></button>
+{% endifequal %}
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+</div>
+<hr>
+
+<h2>Comments </h2><br>
+<hr>
+
+{% for comment in comments %}
+    <b>{{ comment.text|linebreaks }}</b><br>
+    
+      
+
+     <button type = "button" id="up" onClick="voting($(this),'up','{{comment.id}}');" class = "icon-thumbs-up">Vote Up <b>{{ comment.userUpVotes }}</b> </button>
+     <button type = "button" id="down" onClick="voting($(this),'down','{{comment.id}}');"> Vote Down <b>{{ comment.userDownVotes }}</b></button><br>
+     
+    <i><font size = "2" color = "black" >Commented by: {{ comment.commented_by.username }}</font><br></i>
+    <i><font size="2" color="black"> Time commented: {{ comment.commented_at }}</font></i><br>
+    
+    {% ifequal request.user.username comment.commented_by.username %}
+            
+           <button type="button"><a class = "del" href="/comment/delete/{{ comment.id }}" Style="text-decoration: none">DELETE</a></button>
+        {% endifequal %}
+        
+        
+    {% ifequal request.user.username comment.commented_by.username %}
+            
+           <button type="button"><a class = "del" href="/comment/edit/{{ comment.id }}" Style="text-decoration: none">EDIT</a></button>
+        {% endifequal %}<br>
+_ _ _ _ _ _ _ _ _ _ _ _ _ ______ _ _ _ _ _ _ _ _ _  _ ______ _ _ _ _  _ 
+{% endfor %}
+
+    
+    
+     <p><a href="/comment/add/{{ thread.id }}/" Style="text-decoration: none">Add comments</a><p>
+
+{% endblock %}
+

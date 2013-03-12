@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+</script>
+<script> 
+$(document).ready(function(){
+  $("#flip").click(function(){
+    $("#panel").slideToggle("slow");
+  });
+});
+</script>
+ 
+<style type="text/css"> 
+#flip
+{
+padding:5px;
+text-align:left;
+background color:grey;
+border:solid 1px #c3c3c3;
+
+}
+#panel
+{
+padding:50px;
+display:none;
+}
+</style>
+</head>
+<body>
+{% for thread in threads %}<br>
+	<div id="flip"><b><a href="/thread/{{ thread.id }}" Style="text-decoration: none">{{ thread.title }} </a><br></b></div>
+    <div id= "panel">{{ thread.description }}<br><br>
+	<i>POSTED BY  {{ thread.thread_user.username }}</i><br> 
+	<i> created time </i> : {{ thread.created }}<br>
+	</div>
+{% endfor %}
+
+<hr>
+
+    <a href="/thread/add" Style="text-decoration: none"><span> Add a THREAD</span></a>
+
+
+{% endblock %}
+
+</head>
+</html>

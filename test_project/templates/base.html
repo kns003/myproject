@@ -1,0 +1,37 @@
+<html>
+<head>
+<style type="text/css">
+body { color: #efd; background: #A49EC5; padding: 0 4em; margin: 0;align:center }
+h1 { padding: 1em 1em; background: #736F8A }
+h2 { color: #736F8A; border-top: 1px dotted #fff; margin-top: 2em }
+p { margin: 1em 0 }
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+</script>
+<script>
+$(document).ready(function(){
+  $("#div1").hide().fadeIn(1000);
+	
+});
+</script>
+</head>
+<div id = "div1">
+<body>
+
+<h1>|| Q & A Forum ||</h1>  
+<h2> Welcome </h2> 
+{% if request.user.is_authenticated %} 
+    {{ request.user.get_full_name }} || <a href="/logout/" align = "right" Style="text-decoration: none">Logout </a>
+{% else %} 
+    Guest || <a href="/login/" align = "right" Style="text-decoration: none">Login</a> 
+{% endif %}
+||<a href="/register/" Style="text-decoration: none">Register</a> 
+<p> <a href="/" Style="text-decoration: none">Home</a></p>
+{% block content %}
+{% endblock %}
+
+
+</div>
+</body>
+</html>
+
