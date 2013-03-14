@@ -6,7 +6,7 @@ import datetime, random, sha
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.mail import send_mail
 from test_project.forum.models import Thread, Comment
-from test_project.forms import ThreadForm , UserRegisterForm, CommentForm
+from test_project.forms import ThreadForm , UserRegisterForm, CommentForm,ThreadSearchForm
 from django.template import Context, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -20,9 +20,21 @@ logger = logging.getLogger(__name__)
 
 def home(request):
     
-    
-    threads = Thread.objects.all()
-    return render_to_response('home.html', locals())
+    if request.method=="POST":
+        form=ThreadSearchForm(request.POST)
+        if form.is_valid():
+            title=form.cleaned_data['title']
+            threads=Thread.objects.filter(title__icontains=title)
+            context_variable=RequestContext(request)
+            return render_to_response('home.html',locals(),context_variable)
+        else:
+            
+
+            return HttpResponse("No such threads present.Please try again")
+    else:    
+        form=ThreadSearchForm()
+        threads = Thread.objects.all()
+        return render_to_response('home.html', locals())
     
 @login_required
 
