@@ -45,7 +45,7 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = '/home/media/shashank/myproject/test_project/static'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -55,7 +55,7 @@ MEDIA_URL = ''
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/static/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'mfg-3469-qdv@u9=%pe6k62)w7)m=4@g9&vc*w-f$094wqddo5'
@@ -107,3 +107,9 @@ deployment_hostname = 'localhost'
 import_string = 'from deployment_hosts.' + deployment_hostname + ' import *'
 print import_string
 exec import_string
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'kns003@gmail.com'
+EMAIL_HOST_PASSWORD = '###'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
